@@ -1,7 +1,7 @@
 FROM messense/rust-musl-cross:x86_64-musl AS chef
 ENV SQLX_OFFLINE=true
 RUN cargo install cargo-chef
-WORKDIR /actix_template
+WORKDIR /ambient_pair
 
 RUN --mount=type=secret,id=clerk,env=APP_CLERK_KEY 
 
@@ -12,7 +12,7 @@ COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder
-COPY --from=planner /actix_template/recipe.json recipe.json
+COPY --from=planner /ambient_pair/recipe.json recipe.json
 # Build & cache dependencies
 RUN cargo chef cook --release --target x86_64-unknown-linux-musl --recipe-path recipe.json
 # Copy source code from previous stage
@@ -22,10 +22,10 @@ RUN cargo build --release --target x86_64-unknown-linux-musl
 
 # Create a new stage with a minimal image
 FROM scratch
-COPY --from=builder /actix_template/target/x86_64-unknown-linux-musl/release/actix_template /actix_template
+COPY --from=builder /ambient_pair/target/x86_64-unknown-linux-musl/release/ambient_pair /ambient_pair
 COPY configuration configuration
 
 ENV APP_ENV="prod"
     
-ENTRYPOINT ["/actix_template"]
+ENTRYPOINT ["/ambient_pair"]
 EXPOSE 8000

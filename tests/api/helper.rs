@@ -1,6 +1,6 @@
 use std::thread;
 
-use actix_template::{
+use ambient_pair::{
     config::{self, Config, DatabaseConfig},
     server::Server,
     telemetry::{EnvLevel, init_new_subscriber},
@@ -15,7 +15,7 @@ use uuid::Uuid;
 //TODO: NEED TO HAVE TEST SPECIFIC REDIS GROUP TOO
 
 static TRACING: Lazy<()> = Lazy::new(|| {
-    let (name, env_filter) = ("test_invite", EnvLevel::Debug);
+    let (name, env_filter) = ("test_ambient_pair", EnvLevel::Debug);
     if std::env::var("TEST_LOG").is_ok() {
         init_new_subscriber(name, env_filter, std::io::stdout);
     } else {

@@ -27,7 +27,7 @@ down-docker:
 run-app:
 	docker compose -f docker-compose.yml up
 down-app:
-	docker compose -f docker-compose.yml down --volumes && docker image rm actix_template-api
+	docker compose -f docker-compose.yml down --volumes && docker image rm ambient_pair-api
 db:
 	psql -h localhost -p 5432 -U postgres -d postgres
 db-add:

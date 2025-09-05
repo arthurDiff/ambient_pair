@@ -1,4 +1,4 @@
-name: actix_template_local
+name: ambient_pair_local
 
 services:
   postgres:

@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use actix_template::{models::Event, response::ResponseBody};
+use ambient_pair::{models::Event, response::ResponseBody};
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 
 use crate::helper::{SESSION_TOKEN, TestApp};

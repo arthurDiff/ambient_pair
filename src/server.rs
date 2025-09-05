@@ -93,12 +93,3 @@ Need:
 - storage provider S3
 - mailing service
 */
-
-/*
-Routes:
-/events
-/events/:eventId
-/events/:eventId/invites
-/group
-
-*/

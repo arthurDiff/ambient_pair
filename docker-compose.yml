@@ -1,6 +1,6 @@
 services:
   api:
-    image: arthurdiff/actix_template
+    image: arthurdiff/ambient_pair
     environment:
       DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@db:5432"
       APP_CLERK_KEY: ${APP_CLERK_KEY}

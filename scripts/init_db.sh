@@ -20,7 +20,7 @@ DB_HOST="${POSTGRES_HOST:=localhost}"
 if [ $RUN_DOCKER  = true ]
 then
 docker run\
-    --name invite \
+    --name ambient_pair \
     -e POSTGRES_USER=${DB_USER} \
     -e POSTGRES_PASSWORD=${DB_PASSWORD} \
     -e POSTGRES_DB=${DB_NAME} \
