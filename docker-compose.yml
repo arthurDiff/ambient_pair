@@ -1,0 +1,64 @@
+services:
+  api:
+    image: arthurdiff/actix_template
+    environment:
+      DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@db:5432"
+      APP_CLERK_KEY: ${APP_CLERK_KEY}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+    networks:
+      app:
+  db:
+    image: postgres:17.5-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - psql -h "db" -U $${POSTGRES_USER} -p 5432 -d $${POSTGRES_DB} -c "\q" || exit 1
+      interval: 2s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    networks:
+      app:
+  cache:
+    image: redis:8.0-alpine
+    restart: always
+    ports:
+      - 6379
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: ["redis-server"]
+    volumes:
+      - cache:/data
+    networks:
+      app:
+
+networks:
+  app:
+
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local

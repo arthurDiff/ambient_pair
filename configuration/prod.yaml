@@ -1,0 +1,7 @@
+server:
+  host: "0.0.0.0"
+  base_url: "http://0.0.0.0"
+database:
+  host: "db"
+  require_ssl: false
+redis_url: "redis://cache:6379"
