@@ -5,6 +5,7 @@ use clerk_rs::{
     validators::{actix::ClerkMiddleware, jwks::MemoryCacheJwksProvider},
 };
 use redis::aio::MultiplexedConnection;
+use rspotify::{ClientCredsSpotify, Credentials};
 use secrecy::ExposeSecret;
 use sqlx::{PgPool, postgres::PgPoolOptions};
 use std::net::TcpListener;
@@ -33,6 +34,10 @@ impl Server {
             Some(config.clerk_key.expose_secret().into()),
             None,
         ));
+        let spotify = ClientCredsSpotify::new(Credentials::new(
+            &config.spotify.client_id,
+            config.spotify.client_secret.expose_secret(),
+        ));
         // dep inj end
 
         let listener = TcpListener::bind(format!("{}:{}", config.server.host, config.server.port))?;
@@ -40,7 +45,7 @@ impl Server {
 
         Ok(Self {
             port,
-            server: run(listener, db_pool, redis_conn, clerk).await?,
+            server: run(listener, db_pool, redis_conn, clerk, spotify).await?,
         })
     }
 
@@ -58,6 +63,7 @@ async fn run(
     db_pool: PgPool,
     redis_conn: MultiplexedConnection,
     clerk: Clerk,
+    spotify: ClientCredsSpotify,
 ) -> Result<ActixServer, anyhow::Error> {
     Ok(HttpServer::new(move || {
         App::new()
@@ -80,16 +86,8 @@ async fn run(
             )
             .app_data(web::Data::new(db_pool.clone()))
             .app_data(web::Data::new(redis_conn.clone()))
+            .app_data(web::Data::new(spotify.clone()))
     })
     .listen(listener)?
     .run())
 }
-
-/*
-Need:
-- rate limiting
-- idempotency
-- source block
-- storage provider S3
-- mailing service
-*/

@@ -35,6 +35,7 @@ impl TryFrom<String> for Environment {
 pub struct Config {
     pub server: ServerConfig,
     pub database: DatabaseConfig,
+    pub spotify: SpotifyConfig,
     pub redis_url: String,
     pub clerk_key: SecretString,
 }
@@ -114,4 +115,10 @@ impl DatabaseConfig {
     pub fn with_db(&self) -> PgConnectOptions {
         self.without_db().database(&self.name)
     }
+}
+
+#[derive(serde::Deserialize, Clone, Debug)]
+pub struct SpotifyConfig {
+    pub client_id: String,
+    pub client_secret: SecretString,
 }
