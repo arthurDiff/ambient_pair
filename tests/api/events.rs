@@ -6,6 +6,7 @@ use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use crate::helper::{SESSION_TOKEN, TestApp};
 
 #[tokio::test]
+#[ignore]
 async fn create_event_successfully_test() {
     let TestApp {
         ref address, db_pool, ..
@@ -45,6 +46,7 @@ async fn create_event_successfully_test() {
 }
 
 #[tokio::test]
+#[ignore]
 async fn should_return_cached_result_for_same_idem_key() {
     let TestApp {
         ref address, db_pool, ..

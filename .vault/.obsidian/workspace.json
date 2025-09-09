@@ -31,20 +31,14 @@
             "id": "9b3eca2a04c3747f",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Ambient Pair Kanban Board.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "file": "ambient_pair.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-trello",
-              "title": "Ambient Pair Kanban Board"
+              "icon": "lucide-file",
+              "title": "ambient_pair"
             }
           }
         ],
@@ -199,8 +193,8 @@
   },
   "active": "9b3eca2a04c3747f",
   "lastOpenFiles": [
-    "ambient_pair.md",
     "Ambient Pair Kanban Board.md",
+    "ambient_pair.md",
     "Figure Out Spotify OAuth Impl.md",
     "Define Database Schema.md",
     "Root.md"

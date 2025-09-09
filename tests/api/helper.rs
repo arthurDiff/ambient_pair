@@ -120,7 +120,7 @@ async fn configure_db(config: &DatabaseConfig) -> PgPool {
 }
 
 #[allow(dead_code)]
-const TEST_USER: &str = "user_2ysgqtTDuD2gPviOwynN5mlL36f";
+const TEST_USER: &str = "user_32Nt3ihLwb8EfIL3m3fAAIQH6i7";
 
 #[allow(dead_code)]
 #[derive(serde::Deserialize)]
